@@ -14,13 +14,22 @@ window.onload = () => {
 					<line class="second" x1="100" y1="15" x2="15" y2="100" stroke="red" stroke-width="10" stroke-linecap="round" />
 				</svg>`;
 
-	function stepCross() {
+	function stepCross(target) {
+        target.innerHTML = cross;
+    }
+
+	function stepZero(target) {
+        target.innerHTML = circle;
 	}
 
-	function stepZero() {
-	}
-
-	function init() {
+	function init(e) {
+        if (!step) {
+            stepCross(e.target)
+        } else {
+            stepZero(e.target)
+        }
+        step = !step;
+        win();
 	}
 
 	function newGame() {
