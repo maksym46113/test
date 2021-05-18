@@ -16,10 +16,14 @@ window.onload = () => {
 
 	function stepCross(target) {
         target.innerHTML = cross;
+        let crossAudio = new Audio('audio/cross.mp3');
+        crossAudio.play();
     }
 
 	function stepZero(target) {
         target.innerHTML = circle;
+        let circleAudio = new Audio('audio/circle.mp3');
+        circleAudio.play();
 	}
 
 	function init(e) {
