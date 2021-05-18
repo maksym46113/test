@@ -62,7 +62,7 @@ window.onload = () => {
 			[2, 4, 6]
 		];
 
-		for (let i = 0; i < comb.length; i++) {
+		for (let i = 0; i < winArray.length; i++) {
 
 			if (fields[winArray[i][0]].classList.contains('x') &&
 				fields[winArray[i][1]].classList.contains('x') &&
