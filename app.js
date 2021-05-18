@@ -15,31 +15,86 @@ window.onload = () => {
 				</svg>`;
 
 	function stepCross(target) {
-        target.innerHTML = cross;
-        let crossAudio = new Audio('audio/cross.mp3');
-        crossAudio.play();
-    }
-
+		target.innerHTML = cross;
+		target.classList.add('x');
+		let crossAudio = new Audio('audio/cross.mp3');
+		crossAudio.play();
+		count++;
+	}
 	function stepZero(target) {
-        target.innerHTML = circle;
-        let circleAudio = new Audio('audio/circle.mp3');
-        circleAudio.play();
+		target.innerHTML = circle;
+		target.classList.add('o');
+		let circleAudio = new Audio('audio/circle.mp3');
+		circleAudio.play();
+		count++;
 	}
 
 	function init(e) {
-        if (!step) {
-            stepCross(e.target)
-        } else {
-            stepZero(e.target)
-        }
-        step = !step;
-        win();
+		if (!step) {
+			stepCross(e.target);
+		} else {
+			stepZero(e.target);
+		}
+		step = !step;
+		win();
 	}
 
 	function newGame() {
+		step = false;
+		count = 0;
+		res.innerText = '';
+		fields.forEach(item => {
+			item.innerHTML = '';
+			item.classList.remove('x', 'o', 'active');
+		});
+		game.addEventListener('click', init);
 	}
 
 	function win() {
+		let winArray = [
+			[0, 1, 2],
+			[3, 4, 5],
+			[6, 7, 8],
+			[0, 3, 6],
+			[1, 4, 7],
+			[2, 5, 8],
+			[0, 4, 8],
+			[2, 4, 6]
+		];
+
+		for (let i = 0; i < comb.length; i++) {
+
+			if (fields[winArray[i][0]].classList.contains('x') &&
+				fields[winArray[i][1]].classList.contains('x') &&
+				fields[winArray[i][2]].classList.contains('x')) {
+				setTimeout(() => {
+					fields[winArray[i][0]].classList.add('active');
+					fields[winArray[i][1]].classList.add('active');
+					fields[winArray[i][2]].classList.add('active');
+					res.innerText = 'Wygral X';
+				}, 1500);
+				game.removeEventListener('click', init);
+			}
+
+			else if (fields[winArray[i][0]].classList.contains('o') &&
+				fields[winArray[i][1]].classList.contains('o') &&
+				fields[winArray[i][2]].classList.contains('o')) {
+				setTimeout(() => {
+					fields[winArray[i][0]].classList.add('active');
+					fields[winArray[i][1]].classList.add('active');
+					fields[winArray[i][2]].classList.add('active');
+					res.innerText = 'Wygral O';
+				}, 1500);
+				game.removeEventListener('click', init);
+			}
+
+			else if (count == 9) {
+				res.innerText = 'Remis';
+				game.removeEventListener('click', init);
+			}
+
+		}
+
 	}
 
 	btnGame.addEventListener('click', newGame);
